@@ -16,17 +16,22 @@ target_include_directories(${project_name} PUBLIC ${Vulkan_INCLUDE_DIRS})
 
 add_subdirectory(external/glfw EXCLUDE_FROM_ALL)
 add_subdirectory(external/glm EXCLUDE_FROM_ALL)
+add_subdirectory(external/assimp EXCLUDE_FROM_ALL)
 
 target_link_libraries(${project_name}
   PRIVATE ${Vulkan_LIBRARIES}
   PRIVATE glfw
   PRIVATE glm
+  PRIVATE assimp
 )
 target_include_directories(glfw PUBLIC ${Vulkan_INCLUDE_DIRS})
+target_include_directories(${project_name} PUBLIC external/stb)
+target_include_directories(${project_name} PUBLIC external/assimp)
 
 if(WIN32)
 	set(MSVC_DISABLED_WARNINGS_LIST
 		"C4100" # unreferenced formal parameter
+		"C4201" # nonstandard extension used: nameless struct/union
 		"C4820" # '<x>' : '<y>' bytes padding added after data member '<z>'
 		)
 	string(REPLACE "C" " -wd" MSVC_DISABLED_WARNINGS_STR ${MSVC_DISABLED_WARNINGS_LIST})
